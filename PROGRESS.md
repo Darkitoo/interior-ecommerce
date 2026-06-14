@@ -9,11 +9,16 @@
 
 ## ⏭️ DA QUI SI RIPARTE (prossimo step)
 
-**Workstream 1 — Frontend responsive & UX.** Primo task concreto:
-1. Aggiungere il link "I miei ordini" nella navbar (la pagina esiste già ma non è raggiungibile dal menu).
-2. Rendere la navbar responsive con hamburger + drawer su mobile.
-3. A seguire, gli stati UI (loading/empty/error) e i toast su ogni azione.
-Vedi sezione §1 per il dettaglio completo. NON iniziare da feature backend: il gap è tutto frontend/UX.
+**Workstream 1 — Frontend responsive & UX.**
+FATTO: navbar globale responsive via route group (shop), menu account (dropdown 
+desktop + drawer mobile con hamburger), link "I miei ordini", link Admin se role admin.
+PROSSIMO task concreto:
+1. Stati UI: skeleton/loading su griglia prodotti, ordini e checkout; stati vuoti 
+   (carrello vuoto, nessun ordine, nessun risultato ricerca, categoria vuota) con CTA; 
+   error boundary + pagina errore amichevole; 404/500 custom.
+2. Toast su ogni azione (aggiunto al carrello, ordine creato, errore pagamento, 
+   profilo salvato) — es. sonner.
+Resta tutto frontend/UX. Dopo: feature core (§2) e pagine legali (§6).
 
 ---
 
@@ -63,6 +68,9 @@ Vedi sezione §1 per il dettaglio completo. NON iniziare da feature backend: il 
 - Webhook: runtime = 'nodejs', raw body via req.text(), idempotente (se già paid → 200 e basta)
 - Fix prod: /login usava useSearchParams() senza confine Suspense → form estratto in components/auth/LoginForm.tsx avvolto in <Suspense> (serve per il prerender statico)
 - @hookform/resolvers NON installato → validazione Zod manuale negli onSubmit
+- Navbar globale in app/(shop)/layout.tsx (route group). (shop) raggruppa home, 
+  prodotto, cart, checkout, order-confirmation (URL invariati). auth e dashboard/admin 
+  restano fuori con layout propri. SessionProvider nel root layout.
 
 ---
 
@@ -74,8 +82,8 @@ Vedi sezione §1 per il dettaglio completo. NON iniziare da feature backend: il 
 
 ## 1 · Frontend, responsive & UX — P0 (il gap più grosso)
 - [ ] Responsive completo (mobile 360 / tablet 768 / desktop 1280+) su OGNI pagina: home, lista prodotti, dettaglio, carrello, checkout, dashboard, admin, login/register.
-- [ ] Navbar mobile: hamburger + drawer, con catalogo, carrello (badge), account.
-- [ ] Link "I miei ordini" nella nav (oggi la pagina esiste ma non è raggiungibile — bug UX). Aggiungere anche menu utente Profilo/Logout.
+- [x] Navbar mobile: hamburger + drawer, con catalogo, carrello (badge), account.
+- [x] Link "I miei ordini" nella nav (oggi la pagina esiste ma non è raggiungibile — bug UX). Aggiungere anche menu utente Profilo/Logout.
 - [ ] Stati di caricamento: skeleton/spinner su griglia prodotti, ordini, checkout.
 - [ ] Stati vuoti: carrello vuoto, nessun ordine, nessun risultato, categoria vuota — con CTA.
 - [ ] Stati di errore: error boundary + pagina errore amichevole; mai stacktrace in faccia.
@@ -114,7 +122,7 @@ DoD: gestisci l'intero ciclo di vita prodotto/ordine dall'admin senza toccare il
 ## 4 · Contenuto & dati — P0
 - [ ] Seed 15–20+ prodotti con immagini Unsplash di qualità, descrizioni vere, dimensioni/materiali, prezzi realistici.
 - [ ] Distribuzione sensata tra categorie (Arredamento, Illuminazione, Decorazioni…).
-- [ ] Immagini coerenti con la palette del brand (terracotta/beige).
+- [ ] Immagini coerenti con la palette del brand (grigio/nero/bianco (palette reale del progetto)).
 - [ ] Eventuale hero/immagine per categoria.
 DoD: la home sembra un catalogo curato, non dati di test.
 
