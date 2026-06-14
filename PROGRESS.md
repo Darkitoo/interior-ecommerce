@@ -1,5 +1,25 @@
 # Progress Handoff
 
+## Stato produzione (LIVE)
+- URL produzione: https://interior-ecommerce-seven.vercel.app
+- Repo GitHub (pubblico): https://github.com/Darkitoo/interior-ecommerce
+- Branch main → push su main = auto-deploy su Vercel
+- Progetto Vercel: interior-ecommerce (team walterspina2003-4929, Hobby/Free)
+- Env vars di produzione configurate su Vercel: DATABASE_URL (Neon poolata
+  nuova), NEXTAUTH_SECRET, NEXTAUTH_URL=https://interior-ecommerce-seven.vercel.app,
+  STRIPE_SECRET_KEY + NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY (TEST),
+  STRIPE_WEBHOOK_SECRET (whsec_ di PRODUZIONE, diverso da quello locale della CLI)
+- Webhook Stripe produzione: endpoint /api/payments/webhook, evento
+  payment_intent.succeeded, Stripe in modalità TEST/sandbox
+- Verificato end-to-end: pagamento test 4242 -> ordine passato a 'paid'
+  via webhook di produzione
+
+## Note sicurezza (risolto)
+- La password Neon è stata RUOTATA: il vecchio .claude/settings.local.json
+  era finito nel repo pubblico esponendo la connection string
+- .claude/ ora è nel .gitignore e rimosso da repo + history (force push)
+- La credenziale esposta è morta dopo la rotazione
+
 ## Stato attuale
 - Fase 1 (setup, DB, auth): COMPLETA
 - Fase 2 (prodotti, categorie, admin prodotti): COMPLETA  
@@ -7,6 +27,7 @@
 - Fase 4 (dashboard utente): COMPLETA
 - Fase 4b (admin dashboard): COMPLETA
 - Fase 5a (sicurezza): COMPLETA
+- Fase 5b (deploy): COMPLETA
 
 ## Stack confermato a runtime
 - Next.js 16, TypeScript, Tailwind CSS
@@ -57,19 +78,9 @@ Tutto il core è completo e funzionante localmente:
 
 ## To-do per versione finale portfolio
 
-### Fase 5b — Deploy (priorità 1, ~1 ora)
-- lib/env.ts già pronta: configurare tutte le env vars su Vercel PRIMA del build
-- Push su GitHub (repo pubblico)
-- Deploy su Vercel (import repo)
-- Webhook Stripe produzione: aggiungere endpoint nel dashboard Stripe
-  -> https://tuo-dominio.vercel.app/api/payments/webhook
-  -> ottenere nuovo STRIPE_WEBHOOK_SECRET (diverso da whsec_ locale)
-- NEXTAUTH_URL=https://tuo-dominio.vercel.app
-- NEXTAUTH_SECRET: generare con: openssl rand -base64 32
-- Test end-to-end su produzione con carta 4242
-
 ### Fase 6 — Contenuto e UX (priorità 2, ~1 ora)
-- Sistemare immagine rotta "Lampada da Tavolo Minimal" (URL nel DB)
+- Immagine rotta "Lampada da Tavolo Minimal" (URL nel DB) — FATTA
+- Ruolo admin impostato — FATTO
 - Seed dati più ricchi: almeno 15-20 prodotti con immagini Unsplash belle
 - Paginazione lista ordini admin (ora carica tutto)
 
@@ -89,3 +100,6 @@ Tutto il core è completo e funzionante localmente:
 - STRIPE_WEBHOOK_SECRET locale (whsec_ dalla CLI) != quello di produzione
 - @hookform/resolvers non installato: i form usano validazione Zod manuale
 - params sempre async in Next.js 16
+- Fix build per produzione: /login usava useSearchParams() senza confine
+  Suspense -> estratto il form in components/auth/LoginForm.tsx avvolto in
+  <Suspense> nella pagina (necessario per il prerender statico)
