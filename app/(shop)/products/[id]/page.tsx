@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import AddToCartButton from '@/components/products/AddToCartButton';
-import CartIcon from '@/components/cart/CartIcon';
 
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -30,22 +29,6 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
   return (
     <main className="min-h-screen bg-gray-50">
-
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="text-xl font-bold text-gray-900 tracking-tight">
-              STUDIO<span className="text-gray-400 font-light">DESIGN</span>
-            </Link>
-            <div className="flex items-center gap-6">
-              <CartIcon />
-              <Link href="/" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-                ← Torna al catalogo
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 

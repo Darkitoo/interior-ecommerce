@@ -29,16 +29,6 @@ export default async function OrderConfirmationPage({ params, searchParams }: Pr
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            <Link href="/" className="text-xl font-bold text-gray-900 tracking-tight">
-              STUDIO<span className="text-gray-400 font-light">DESIGN</span>
-            </Link>
-          </div>
-        </div>
-      </header>
-
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="bg-white rounded-2xl border border-gray-100 p-10 max-w-md w-full text-center">
           {succeeded ? (

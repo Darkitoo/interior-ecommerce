@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useCart } from '@/components/cart/CartProvider';
@@ -257,7 +256,6 @@ export default function CheckoutPage() {
   if (status === 'loading' || cartLoading) {
     return (
       <main className="min-h-screen bg-gray-50">
-        <Header />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <p className="text-gray-400">Caricamento...</p>
         </div>
@@ -273,8 +271,6 @@ export default function CheckoutPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      <Header />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
@@ -383,22 +379,5 @@ export default function CheckoutPage() {
         </div>
       </div>
     </main>
-  );
-}
-
-function Header() {
-  return (
-    <header className="bg-white border-b border-gray-100 sticky top-0 z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="/" className="text-xl font-bold text-gray-900 tracking-tight">
-            STUDIO<span className="text-gray-400 font-light">DESIGN</span>
-          </Link>
-          <Link href="/cart" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-            ← Torna al carrello
-          </Link>
-        </div>
-      </div>
-    </header>
   );
 }
